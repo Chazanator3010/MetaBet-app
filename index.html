@@ -1011,3 +1011,1016 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaBet - Sports Betting Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #1abc9c;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --success: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #16a085;
+            border-color: #16a085;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .logo span {
+            color: white;
+        }
+        
+        .auth-buttons .btn {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        
+        .header-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+        }
+        
+        .main-nav ul {
+            display: flex;
+        }
+        
+        .main-nav li {
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .main-nav a {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a:hover {
+            color: var(--secondary);
+        }
+        
+        .main-nav li.active a {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .quick-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-links a {
+            margin-left: 15px;
+            font-size: 14px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .quick-links a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1205&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+        
+        .promo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        /* Sports Navigation */
+        .sports-nav {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .sports-nav ul {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sports-nav li {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sports-nav li:hover, .sports-nav li.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        /* Betting Markets */
+        .markets-section {
+            padding: 30px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .section-header h2 {
+            font-size: 22px;
+            color: var(--dark);
+        }
+        
+        .market-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .market-tabs .tab {
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .market-tabs .tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .market-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .market-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .market-header h3 {
+            font-size: 16px;
+        }
+        
+        .market-header .time {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .market-odds {
+            display: flex;
+            padding: 15px;
+        }
+        
+        .odds-column {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .odds-column h4 {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .odds-item {
+            background-color: var(--light);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .odds-item:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .odds-item .team {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .odds-item .odd {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .more-odds {
+            text-align: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            color: var(--secondary);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Promotions Section */
+        .promotions-section {
+            padding: 30px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .promo-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .promo-image {
+            height: 150px;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .promo-content {
+            padding: 15px;
+        }
+        
+        .promo-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .promo-content p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            font-size: 14px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            font-size: 20px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-top, .header-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .main-nav ul {
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+            
+            .main-nav li {
+                margin-bottom: 5px;
+            }
+            
+            .hero-content h1 {
+                font-size: 28px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .promo-buttons {
+                flex-direction: column;
+            }
+            
+            .market-odds {
+                flex-direction: column;
+            }
+            
+            .odds-column {
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* Bet Slip */
+        .bet-slip {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 350px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px 8px 0 0;
+            z-index: 90;
+            transform: translateY(calc(100% - 40px));
+            transition: transform 0.3s;
+        }
+        
+        .bet-slip.open {
+            transform: translateY(0);
+        }
+        
+        .slip-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .slip-header h3 {
+            font-size: 16px;
+        }
+        
+        .slip-count {
+            background-color: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .slip-content {
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .slip-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .slip-item:last-child {
+            border-bottom: none;
+        }
+        
+        .slip-item .event {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .slip-item .selection {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .slip-item .remove {
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .slip-actions {
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .stake-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .stake-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .stake-input .btn {
+            border-radius: 0 4px 4px 0;
+            padding: 8px 12px;
+        }
+        
+        .potential-win {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .place-bet {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .place-bet:hover {
+            background-color: #219653;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">Meta<span>Bet</span></div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Log In</a>
+                    <a href="#" class="btn btn-primary">Join Now</a>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <nav class="main-nav">
+                    <ul>
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Sports</a></li>
+                        <li><a href="#">Live</a></li>
+                        <li><a href="#">Promotions</a></li>
+                        <li><a href="#">Esports</a></li>
+                        <li><a href="#">Casino</a></li>
+                    </ul>
+                </nav>
+                <div class="quick-links">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#"><i class="fas fa-bell"></i></a>
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bet Smarter with MetaBet</h1>
+                <p>Get the best odds on all major sports and up to $500 in bonus bets when you join today!</p>
+                <div class="promo-buttons">
+                    <a href="#" class="btn btn-primary">Join Now</a>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports Navigation -->
+    <section class="sports-nav">
+        <div class="container">
+            <ul>
+                <li class="active">Popular</li>
+                <li>Football</li>
+                <li>Basketball</li>
+                <li>Tennis</li>
+                <li>Cricket</li>
+                <li>Rugby</li>
+                <li>Golf</li>
+                <li>Baseball</li>
+                <li>Boxing</li>
+                <li>MMA</li>
+                <li>Esports</li>
+                <li>More Sports</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Betting Markets -->
+    <section class="markets-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Today's Top Matches</h2>
+                <div class="market-tabs">
+                    <div class="tab active">All</div>
+                    <div class="tab">Football</div>
+                    <div class="tab">Basketball</div>
+                    <div class="tab">Tennis</div>
+                </div>
+            </div>
+
+            <!-- Market Card 1 -->
+            <div class="market-card">
+                <div class="market-header">
+                    <h3>English Premier League</h3>
+                    <div class="time">Today, 20:00</div>
+                </div>
+                <div class="market-odds">
+                    <div class="odds-column">
+                        <h4>Match Winner</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Man City', 1.85)">
+                            <div class="team">Man City</div>
+                            <div class="odd">1.85</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Draw', 3.60)">
+                            <div class="team">Draw</div>
+                            <div class="odd">3.60</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Arsenal', 4.20)">
+                            <div class="team">Arsenal</div>
+                            <div class="odd">4.20</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>Total Goals</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Over 2.5', 1.65)">
+                            <div class="team">Over 2.5</div>
+                            <div class="odd">1.65</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Under 2.5', 2.10)">
+                            <div class="team">Under 2.5</div>
+                            <div class="odd">2.10</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>Both Teams Score</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'Yes', 1.50)">
+                            <div class="team">Yes</div>
+                            <div class="odd">1.50</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Man City vs Arsenal', 'No', 2.40)">
+                            <div class="team">No</div>
+                            <div class="odd">2.40</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="more-odds">Show More Markets</div>
+            </div>
+
+            <!-- Market Card 2 -->
+            <div class="market-card">
+                <div class="market-header">
+                    <h3>NBA</h3>
+                    <div class="time">Today, 23:30</div>
+                </div>
+                <div class="market-odds">
+                    <div class="odds-column">
+                        <h4>Match Winner</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Lakers', 2.10)">
+                            <div class="team">Lakers</div>
+                            <div class="odd">2.10</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Warriors', 1.75)">
+                            <div class="team">Warriors</div>
+                            <div class="odd">1.75</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>Total Points</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Over 225.5', 1.90)">
+                            <div class="team">Over 225.5</div>
+                            <div class="odd">1.90</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Under 225.5', 1.90)">
+                            <div class="team">Under 225.5</div>
+                            <div class="odd">1.90</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>Handicap</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Lakers +4.5', 1.90)">
+                            <div class="team">Lakers +4.5</div>
+                            <div class="odd">1.90</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Lakers vs Warriors', 'Warriors -4.5', 1.90)">
+                            <div class="team">Warriors -4.5</div>
+                            <div class="odd">1.90</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="more-odds">Show More Markets</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section class="promotions-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest Promotions</h2>
+                <a href="#" class="btn btn-outline">View All</a>
+            </div>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="promo-image">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="promo-content">
+                        <h3>Welcome Bonus</h3>
+                        <p>Get up to $500 in bonus bets when you sign up and make your first deposit.</p>
+                        <a href="#" class="btn btn-primary">Claim Now</a>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-image">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="promo-content">
+                        <h3>Money Back Special</h3>
+                        <p>Get your stake back as a bonus bet if your team loses by 1 point in NBA.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-image">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="promo-content">
+                        <h3>Enhanced Odds</h3>
+                        <p>Boosted odds on selected matches every day. Max bet $50.</p>
+                        <a href="#" class="btn btn-primary">View Offers</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sports</h3>
+                    <ul>
+                        <li><a href="#">Football</a></li>
+                        <li><a href="#">Basketball</a></li>
+                        <li><a href="#">Tennis</a></li>
+                        <li><a href="#">Cricket</a></li>
+                        <li><a href="#">Rugby</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Betting</h3>
+                    <ul>
+                        <li><a href="#">Live Betting</a></li>
+                        <li><a href="#">Betting Rules</a></li>
+                        <li><a href="#">Betting Calculator</a></li>
+                        <li><a href="#">Results</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Responsible Gambling</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 MetaBet. All rights reserved. | 18+ only. Gambling can be addictive. Please play responsibly.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bet Slip -->
+    <div class="bet-slip" id="betSlip">
+        <div class="slip-header" onclick="toggleBetSlip()">
+            <h3>Bet Slip</h3>
+            <div class="slip-count" id="slipCount">0</div>
+        </div>
+        <div class="slip-content" id="slipContent">
+            <!-- Bet items will be added here dynamically -->
+            <p style="text-align: center; color: var(--gray); padding: 20px 0;">Your bet slip is empty</p>
+        </div>
+        <div class="slip-actions">
+            <div class="stake-input">
+                <input type="number" placeholder="Enter stake" id="stakeAmount">
+                <button class="btn btn-primary" onclick="calculateWin()">$</button>
+            </div>
+            <div class="potential-win" id="potentialWin">
+                <span>Potential Win:</span>
+                <span>$0.00</span>
+            </div>
+            <button class="place-bet" onclick="placeBet()">Place Bet</button>
+        </div>
+    </div>
+
+    <script>
+        // Bet Slip Functionality
+        let betSlipItems = [];
+        
+        function toggleBetSlip() {
+            document.getElementById('betSlip').classList.toggle('open');
+        }
+        
+        function addToBetSlip(event, selection, odds) {
+            // Check if selection already exists
+            const exists = betSlipItems.some(item => 
+                item.event === event && item.selection === selection);
+            
+            if (exists) {
+                alert('This selection is already in your bet slip');
+                return;
+            }
+            
+            betSlipItems.push({
+                event,
+                selection,
+                odds: parseFloat(odds)
+            });
+            
+            updateBetSlip();
+            
+            // Open bet slip if closed
+            if (!document.getElementById('betSlip').classList.contains('open')) {
+                toggleBetSlip();
+            }
+        }
+        
+        function updateBetSlip() {
+            const slipContent = document.getElementById('slipContent');
+            const slipCount = document.getElementById('slipCount');
+            
+            slipCount.textContent = betSlipItems.length;
+            
+            if (betSlipItems.length === 0) {
+                slipContent.innerHTML = '<p style="text-align: center; color: var(--gray); padding: 20px 0;">Your bet slip is empty</p>';
+                document.getElementById('potentialWin').lastElementChild.textContent = '$0.00';
+                return;
+            }
+            
+            let html = '';
+            betSlipItems.forEach((item, index) => {
+                html += `
+                    <div class="slip-item">
+                        <div class="event">${item.event}</div>
+                        <div class="selection">
+                            <span>${item.selection}</span>
+                            <span>${item.odds.toFixed(2)}</span>
+                        </div>
+                        <div class="remove" onclick="removeBetSlipItem(${index})">Remove</div>
+                    </div>
+                `;
+            });
+            
+            slipContent.innerHTML = html;
+            calculateWin();
+        }
+        
+        function removeBetSlipItem(index) {
+            betSlipItems.splice(index, 1);
+            updateBetSlip();
+        }
+        
+        function calculateWin() {
+            if (betSlipItems.length === 0) return;
+            
+            const stakeInput = document.getElementById('stakeAmount');
+            let stake = parseFloat(stakeInput.value) || 0;
+            
+            // For multi bets, calculate combined odds
+            let combinedOdds = 1;
+            betSlipItems.forEach(item => {
+                combinedOdds *= item.odds;
+            });
+            
+            const potentialWin = stake * combinedOdds;
+            document.getElementById('potentialWin').lastElementChild.textContent = 
+                '$' + potentialWin.toFixed(2);
+        }
+        
+        function placeBet() {
+            if (betSlipItems.length === 0) {
+                alert('Your bet slip is empty');
+                return;
+            }
+            
+            const stakeInput = document.getElementById('stakeAmount');
+            const stake = parseFloat(stakeInput.value);
+            
+            if (!stake || stake <= 0) {
+                alert('Please enter a valid stake amount');
+                return;
+            }
+            
+            // In a real app, you would send this to your backend
+            alert('Bet placed successfully! Good luck!');
+            
+            // Reset bet slip
+            betSlipItems = [];
+            stakeInput.value = '';
+            updateBetSlip();
+        }
+        
+        // Sports navigation active state
+        document.querySelectorAll('.sports-nav li').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelector('.sports-nav li.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+        
+        // Market tabs active state
+        document.querySelectorAll('.market-tabs .tab').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelector('.market-tabs .tab.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
