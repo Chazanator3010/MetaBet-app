@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaBet - Bet on Twitch Streamers & Esports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #6a3093;  /* Deep purple */
+            --secondary: #a044ff; /* Vibrant purple */
+            --accent: #ff6b6b;   /* Coral accent */
+            --light: #f0f8ff;    /* Very light blue */
+            --dark: #2c0a4d;     /* Dark purple */
+            --gray: #b8c2cc;
+            --success: #48bb78;  /* Green for success */
+            --gradient: linear-gradient(135deg, #6a3093 0%, #4776E6 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #2d3748;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #8a2be2;
+            border-color: #8a2be2;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-twitch {
+            background-color: #9147ff;
+            color: white;
+            border: 1px solid #9147ff;
+        }
+        
+        .btn-twitch:hover {
+            background-color: #772ce8;
+            border-color: #772ce8;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .auth-buttons .btn {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        
+        .header-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+        }
+        
+        .main-nav ul {
+            display: flex;
+        }
+        
+        .main-nav li {
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .main-nav a {
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 0;
+            display: block;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a:hover {
+            color: var(--light);
+        }
+        
+        .main-nav li.active a {
+            color: white;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .quick-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-links a {
+            margin-left: 15px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            transition: color 0.3s;
+        }
+        
+        .quick-links a:hover {
+            color: white;
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(42, 13, 74, 0.8), rgba(42, 13, 74, 0.8)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: var(--light);
+        }
+        
+        .promo-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        /* Streamers Navigation */
+        .streamers-nav {
+            background-color: var(--dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .streamers-nav ul {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .streamers-nav li {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .streamers-nav li:hover, .streamers-nav li.active {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        /* Live Streams Section */
+        .streams-section {
+            padding: 30px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .section-header h2 {
+            font-size: 22px;
+            color: var(--dark);
+        }
+        
+        .section-header .live-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .stream-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .stream-tabs .tab {
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #edf2f7;
+        }
+        
+        .stream-tabs .tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .streams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .stream-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .stream-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stream-thumbnail {
+            position: relative;
+            height: 160px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        
+        .stream-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .live-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .viewer-count {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .stream-info {
+            padding: 15px;
+        }
+        
+        .streamer {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .streamer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        .streamer-name {
+            font-weight: 600;
+        }
+        
+        .stream-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .stream-game {
+            display: inline-block;
+            background-color: #edf2f7;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #4a5568;
+        }
+        
+        .stream-odds {
+            display: flex;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        
+        .odd-item {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .odd-item:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .odd-item .label {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .odd-item .value {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        /* Tournaments Section */
+        .tournaments-section {
+            padding: 30px 0;
+            background-color: #f9f9f9;
+        }
+        
+        .tournament-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .tournament-header {
+            background-color: var(--dark);
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tournament-header h3 {
+            font-size: 16px;
+        }
+        
+        .tournament-header .date {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .tournament-teams {
+            display: flex;
+            padding: 15px;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        
+        .team-name {
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .vs {
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 0 15px;
+        }
+        
+        .tournament-odds {
+            display: flex;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .odds-column {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .odds-column h4 {
+            font-size: 12px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .odds-item {
+            background-color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .odds-item:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .odds-item .odd {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        /* Promotions Section */
+        .promotions-section {
+            padding: 30px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .promo-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .promo-image {
+            height: 150px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promo-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(106, 48, 147, 0.8) 0%, rgba(71, 118, 230, 0.8) 100%);
+        }
+        
+        .promo-image i {
+            z-index: 1;
+        }
+        
+        .promo-content {
+            padding: 15px;
+        }
+        
+        .promo-content h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .promo-content p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            font-size: 14px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            font-size: 20px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-top, .header-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .main-nav ul {
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+            
+            .main-nav li {
+                margin-bottom: 5px;
+            }
+            
+            .hero-content h1 {
+                font-size: 28px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .promo-buttons {
+                flex-direction: column;
+            }
+            
+            .tournament-teams {
+                flex-direction: column;
+            }
+            
+            .team {
+                margin-bottom: 15px;
+            }
+            
+            .vs {
+                margin: 10px 0;
+            }
+        }
+        
+        /* Bet Slip */
+        .bet-slip {
+            position: fixed;
+            bottom: 0;
+            right: 20px;
+            width: 350px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px 8px 0 0;
+            z-index: 90;
+            transform: translateY(calc(100% - 40px));
+            transition: transform 0.3s;
+        }
+        
+        .bet-slip.open {
+            transform: translateY(0);
+        }
+        
+        .slip-header {
+            background: var(--gradient);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .slip-header h3 {
+            font-size: 16px;
+        }
+        
+        .slip-count {
+            background-color: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .slip-content {
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .slip-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .slip-item:last-child {
+            border-bottom: none;
+        }
+        
+        .slip-item .event {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .slip-item .selection {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .slip-item .remove {
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 5px;
+            display: inline-block;
+        }
+        
+        .slip-actions {
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        
+        .stake-input {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .stake-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .stake-input .btn {
+            border-radius: 0 4px 4px 0;
+            padding: 8px 12px;
+        }
+        
+        .potential-win {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .place-bet {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--success);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .place-bet:hover {
+            background-color: #38a169;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/30x30" alt="MetaBet Logo">
+                    MetaBet
+                </div>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Log In</a>
+                    <a href="#" class="btn btn-primary">Join Now</a>
+                </div>
+            </div>
+            <div class="header-bottom">
+                <nav class="main-nav">
+                    <ul>
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Live Streams</a></li>
+                        <li><a href="#">Tournaments</a></li>
+                        <li><a href="#">Top Streamers</a></li>
+                        <li><a href="#">Promotions</a></li>
+                        <li><a href="#">Leaderboards</a></li>
+                    </ul>
+                </nav>
+                <div class="quick-links">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#"><i class="fas fa-bell"></i></a>
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Bet on Your Favorite Twitch Streamers</h1>
+                <p>Predict outcomes, support your favorite creators, and win big with MetaBet's live streaming betting platform</p>
+                <div class="promo-buttons">
+                    <a href="#" class="btn btn-primary">Get $20 Free Bet</a>
+                    <a href="#" class="btn btn-twitch"><i class="fab fa-twitch"></i> Connect Twitch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Streamers Navigation -->
+    <section class="streamers-nav">
+        <div class="container">
+            <ul>
+                <li class="active">All Streams</li>
+                <li>Just Chatting</li>
+                <li>Valorant</li>
+                <li>League of Legends</li>
+                <li>Fortnite</li>
+                <li>Call of Duty</li>
+                <li>Minecraft</li>
+                <li>CS:GO</li>
+                <li>Dota 2</li>
+                <li>Apex Legends</li>
+                <li>Speedrunning</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Live Streams Section -->
+    <section class="streams-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Live Streams <span class="live-badge">LIVE</span></h2>
+                <div class="stream-tabs">
+                    <div class="tab active">All</div>
+                    <div class="tab">High Odds</div>
+                    <div class="tab">Popular</div>
+                </div>
+            </div>
+
+            <div class="streams-grid">
+                <!-- Stream Card 1 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_shroud-320x180.jpg" alt="Stream thumbnail">
+                        <div class="live-indicator">LIVE</div>
+                        <div class="viewer-count">45.2K viewers</div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7ed5e0c6-0191-4eef-8328-4af6e4ea5318-profile_image-70x70.png" alt="Streamer avatar" class="streamer-avatar">
+                            <div class="streamer-name">shroud</div>
+                        </div>
+                        <div class="stream-title">VALORANT with friends !sub !prime</div>
+                        <div class="stream-game">VALORANT</div>
+                        <div class="stream-odds">
+                            <div class="odd-item" onclick="addToBetSlip('shroud stream', 'Win next round', 1.85)">
+                                <div class="label">Win round</div>
+                                <div class="value">1.85</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('shroud stream', 'Get 3 kills', 2.75)">
+                                <div class="label">3 kills</div>
+                                <div class="value">2.75</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('shroud stream', 'Ace next game', 8.50)">
+                                <div class="label">Ace</div>
+                                <div class="value">8.50</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream Card 2 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_xqc-320x180.jpg" alt="Stream thumbnail">
+                        <div class="live-indicator">LIVE</div>
+                        <div class="viewer-count">68.7K viewers</div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/xqc-profile_image-9298dca608632101-70x70.jpeg" alt="Streamer avatar" class="streamer-avatar">
+                            <div class="streamer-name">xQc</div>
+                        </div>
+                        <div class="stream-title">GAMING WARLORD DESTROYS COMPETITION | !youtube !socials</div>
+                        <div class="stream-game">Just Chatting</div>
+                        <div class="stream-odds">
+                            <div class="odd-item" onclick="addToBetSlip('xQc stream', 'Say LULW in chat', 1.45)">
+                                <div class="label">Say LULW</div>
+                                <div class="value">1.45</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('xQc stream', 'Rage quit in 10min', 3.25)">
+                                <div class="label">Rage quit</div>
+                                <div class="value">3.25</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('xQc stream', 'Donation >$100', 5.00)">
+                                <div class="label">Big donation</div>
+                                <div class="value">5.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream Card 3 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_nickmercs-320x180.jpg" alt="Stream thumbnail">
+                        <div class="live-indicator">LIVE</div>
+                        <div class="viewer-count">32.1K viewers</div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/6d942669-0de6-44e2-a61c-2428f6d3855d-profile_image-70x70.png" alt="Streamer avatar" class="streamer-avatar">
+                            <div class="streamer-name">NickMercs</div>
+                        </div>
+                        <div class="stream-title">GRINDING RANKED WITH THE BOYS | !mfam !youtube</div>
+                        <div class="stream-game">Call of Duty: Warzone</div>
+                        <div class="stream-odds">
+                            <div class="odd-item" onclick="addToBetSlip('NickMercs stream', 'Win next game', 2.10)">
+                                <div class="label">Win game</div>
+                                <div class="value">2.10</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('NickMercs stream', '10+ kills', 1.95)">
+                                <div class="label">10+ kills</div>
+                                <div class="value">1.95</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('NickMercs stream', 'Team wipe', 3.50)">
+                                <div class="label">Team wipe</div>
+                                <div class="value">3.50</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stream Card 4 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://static-cdn.jtvnw.net/previews-ttv/live_user_pokimane-320x180.jpg" alt="Stream thumbnail">
+                        <div class="live-indicator">LIVE</div>
+                        <div class="viewer-count">25.4K viewers</div>
+                    </div>
+                    <div class="stream-info">
+                        <div class="streamer">
+                            <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/pokimane-profile_image-1546f204d320d310-70x70.png" alt="Streamer avatar" class="streamer-avatar">
+                            <div class="streamer-name">pokimane</div>
+                        </div>
+                        <div class="stream-title">chill stream ~ league & maybe val later !socials !sub</div>
+                        <div class="stream-game">League of Legends</div>
+                        <div class="stream-odds">
+                            <div class="odd-item" onclick="addToBetSlip('pokimane stream', 'Win next match', 2.75)">
+                                <div class="label">Win match</div>
+                                <div class="value">2.75</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('pokimane stream', 'Get a pentakill', 15.00)">
+                                <div class="label">Pentakill</div>
+                                <div class="value">15.00</div>
+                            </div>
+                            <div class="odd-item" onclick="addToBetSlip('pokimane stream', 'Switch to VALORANT', 3.25)">
+                                <div class="label">Switch game</div>
+                                <div class="value">3.25</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tournaments Section -->
+    <section class="tournaments-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Upcoming Tournaments</h2>
+                <a href="#" class="btn btn-outline">View All</a>
+            </div>
+
+            <!-- Tournament Card 1 -->
+            <div class="tournament-card">
+                <div class="tournament-header">
+                    <h3>VALORANT Champions Tour</h3>
+                    <div class="date">Today, 19:00 EST</div>
+                </div>
+                <div class="tournament-teams">
+                    <div class="team">
+                        <img src="https://via.placeholder.com/60x60" alt="Team logo" class="team-logo">
+                        <div class="team-name">Sentinels</div>
+                        <div class="odd-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Sentinels win', 1.85)">1.85</div>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <img src="https://via.placeholder.com/60x60" alt="Team logo" class="team-logo">
+                        <div class="team-name">Fnatic</div>
+                        <div class="odd-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Fnatic win', 1.95)">1.95</div>
+                    </div>
+                </div>
+                <div class="tournament-odds">
+                    <div class="odds-column">
+                        <h4>Match Winner</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Sentinels 2-0', 3.25)">
+                            <div class="odd">3.25</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Sentinels 2-1', 3.75)">
+                            <div class="odd">3.75</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>Total Maps</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Over 2.5 maps', 2.10)">
+                            <div class="odd">2.10</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Under 2.5 maps', 1.70)">
+                            <div class="odd">1.70</div>
+                        </div>
+                    </div>
+                    <div class="odds-column">
+                        <h4>First Map</h4>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Sentinels win Map 1', 1.85)">
+                            <div class="odd">1.85</div>
+                        </div>
+                        <div class="odds-item" onclick="addToBetSlip('Sentinels vs Fnatic', 'Fnatic win Map 1', 1.95)">
+                            <div class="odd">1.95</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tournament Card 2 -->
+            <div class="tournament-card">
+                <div class="tournament-header">
+                    <h3>League of Legends World Championship</h3>
+                    <div class="date">Tomorrow, 15:00 EST</div>
+                </div>
+                <div class="tournament-teams
